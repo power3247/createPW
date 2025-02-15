@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>유니코드 문자 생성기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        width: 320px;
+        padding: 16px;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      input[type="number"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 100px;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      button {
+        padding: 8px 16px;
+        background: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      button:hover {
+        background: #1976d2;
+      }
+      .result {
+        padding: 12px;
+        background: #f5f5f5;
+        border-radius: 4px;
+        min-height: 20px;
+        word-break: break-all;
+        font-size: 16px;
+        letter-spacing: 1px;
+      }
+      .history {
+        margin-top: 12px;
+        border-top: 1px solid #eee;
+        padding-top: 12px;
+      }
+      .history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px;
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 4px;
+      }
+      .copy-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+      .error {
+        color: #f44336;
+        font-size: 12px;
+        margin-top: 4px;
+      }
+
+      /* 새로운 체크박스 스타일 */
+      .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 0;
+      }
+      .checkbox-wrapper input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+      .checkbox-custom {
+        position: relative;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background: #fff;
+        border: 2px solid #2196f3;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .checkbox-wrapper input[type="checkbox"]:checked + .checkbox-custom {
+        background: #2196f3;
+      }
+      .checkbox-custom:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 5px;
+        top: 1px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+      .checkbox-wrapper
+        input[type="checkbox"]:checked
+        + .checkbox-custom:after {
+        display: block;
+      }
+      .checkbox-label {
+        font-size: 14px;
+        user-select: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3 style="margin: 0 0 8px 0">랜덤 문자 생성기</h3>
+
+      <div class="input-group">
+        <div style="margin-bottom: 4px">생성할 문자 개수 (1-50):</div>
+        <input type="number" id="charCount" min="1" max="50" value="30" />
+        <button id="generate">생성</button>
+        <div id="error" class="error"></div>
+      </div>
+
+      <label class="checkbox-wrapper">
+        <input type="checkbox" id="barcodeMode" checked="checked" />
+        <span class="checkbox-custom"></span>
+        <span class="checkbox-label">바코드 모드</span>
+      </label>
+
+      <div>
+        <div style="margin-bottom: 6px">생성된 문자열:</div>
+        <div class="result" id="result"></div>
+      </div>
+
+      <div class="history">
+        <div style="margin-bottom: 8px">최근 생성 기록:</div>
+        <div id="historyList"></div>
+      </div>
+    </div>
+    <script src="similar-chars.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
